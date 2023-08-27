@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createHashRouter as createMyRouter } from "react-router-dom";
 import { RootLayout } from "./layouts/RootLayout";
 import { HomePage } from "./pages/HomePage";
 
@@ -9,7 +9,7 @@ export enum QueryParamKey {
 }
 
 export function createRouter() {
-    return createBrowserRouter([
+    return createMyRouter([
         {
             element: <RootLayout />,
             children: [
