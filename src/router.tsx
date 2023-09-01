@@ -1,8 +1,8 @@
 import { createHashRouter as createMyRouter } from "react-router-dom";
+import { LessonLayout } from "./layouts/LessonLayout";
 import { RootLayout } from "./layouts/RootLayout";
 import { HomePage } from "./pages/HomePage";
-import { Lesson1Page } from "./pages/lessons/Lesson1Page";
-import { LessonLayout } from "./layouts/LessonLayout";
+import { LESSONS } from "./pages/lessons";
 
 export enum QueryParamKey {
     EULA_DIALOG = "eulaDg",
@@ -22,12 +22,10 @@ export function createRouter() {
                 {
                     path: "lessons",
                     element: <LessonLayout />,
-                    children: [
-                        {
-                            path: "1",
-                            element: <Lesson1Page />,
-                        },
-                    ],
+                    children: LESSONS.map(lesson => ({
+                        path: lesson.slug,
+                        element: lesson.page,
+                    })),
                 },
             ],
         },

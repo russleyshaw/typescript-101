@@ -6,7 +6,7 @@ import "highlight.js/styles/github-dark-dimmed.css";
 import { useCallback, useMemo, useState } from "react";
 import { styled } from "styled-components";
 import { trimLines } from "../lib/string";
-import { Button } from "@blueprintjs/core";
+import { Button, Card } from "@blueprintjs/core";
 
 export interface CodeBlockProps {
     filename?: string;
@@ -14,21 +14,18 @@ export interface CodeBlockProps {
     children: string;
 }
 
-const RootDiv = styled.div`
+const RootDiv = styled(Card).attrs({ elevation: 2 })`
     display: flex;
     flex-direction: column;
-
-    border: 1px solid #ccc;
-    border-radius: 0.5rem;
-    padding: 1rem;
+    overflow: hidden;
 
     position: relative;
 `;
 
 const HeaderDiv = styled.div`
     position: absolute;
-    top: 1rem;
-    right: 1rem;
+    top: 0.5rem;
+    right: 0.5rem;
 `;
 
 export const CodeBlock = observer((props: CodeBlockProps) => {
@@ -52,7 +49,7 @@ export const CodeBlock = observer((props: CodeBlockProps) => {
     return (
         <RootDiv>
             <HeaderDiv>
-                <Button onClick={onCopyClick} text={copied ? "Copied!" : "Copy"} />
+                <Button minimal small onClick={onCopyClick} text={copied ? "Copied!" : "Copy"} />
             </HeaderDiv>
             <pre>
                 <code dangerouslySetInnerHTML={{ __html: highlighted }} />
