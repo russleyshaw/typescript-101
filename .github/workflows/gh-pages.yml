@@ -24,8 +24,8 @@ jobs:
             - name: Prevent Jekyll
               run: touch dist/.nojekyll
 
-            - name: Copy CNAME
-              run: cp CNAME dist/CNAME
+            # - name: Copy CNAME
+            #   run: cp CNAME dist/CNAME
 
             - name: Deploy to Github Pages
               if: success()
