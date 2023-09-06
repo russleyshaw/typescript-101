@@ -1,8 +1,19 @@
-import { Lesson1Page } from "./Lesson1Page";
-import { Lesson2Page } from "./Lesson2Page";
-import { Lesson3Page } from "./Lesson3Page";
-import { Lesson4Page } from "./Lesson4Page";
-import { Lesson6Page } from "./Lesson6Page";
+import { createContext, useContext } from "react";
+import { ArraysPage } from "./ArraysPage";
+import { AsyncAwaitPage } from "./AsyncAwaitPage";
+import { ControlFlowPage } from "./ControlFlowPage";
+import { FunctionsPage } from "./FunctionsPage";
+import { GenericsPage } from "./GenericsPage";
+import { InterfacesPage } from "./InterfacesPage";
+import { TimeoutPage } from "./TimeoutPage";
+import { TypesPage } from "./TypesPage";
+import { VariablesPage } from "./VariablesPage";
+import { NullishOperatorsPage } from "./NullishOperatorsPage";
+
+const LessonNumberContext = createContext<number>(0);
+export function useLessonNumber(): number {
+    return useContext(LessonNumberContext);
+}
 
 export interface LessonInfo {
     page: React.ReactNode;
@@ -12,28 +23,58 @@ export interface LessonInfo {
 
 export const LESSONS = [
     {
-        page: <Lesson1Page />,
-        title: "Lesson 1 - Variables & Constants",
-        slug: "1",
+        page: <VariablesPage />,
+        title: "Variables & Constants",
+        slug: "variables-and-constants",
     },
     {
-        page: <Lesson2Page />,
-        title: "Lesson 2 - Types",
-        slug: "2",
+        page: <TypesPage />,
+        title: "Types",
+        slug: "types",
     },
     {
-        page: <Lesson3Page />,
-        title: "Lesson 3 - Functions",
-        slug: "3",
+        page: <ControlFlowPage />,
+        title: "Control Flow",
+        slug: "control-flow",
     },
     {
-        page: <Lesson4Page />,
-        title: "Lesson 4 - Classes",
-        slug: "4",
+        page: <FunctionsPage />,
+        title: "Functions",
+        slug: "functions",
     },
     {
-        page: <Lesson6Page />,
-        title: "Lesson 6 - Interfaces",
-        slug: "6",
+        page: <ArraysPage />,
+        title: "Arrays",
+        slug: "arrays",
     },
-] satisfies LessonInfo[];
+    {
+        page: <TimeoutPage />,
+        title: "Timeout",
+        slug: "timeout",
+    },
+    {
+        page: <InterfacesPage />,
+        title: "Interfaces",
+        slug: "interfaces",
+    },
+    {
+        page: <GenericsPage />,
+        title: "Generics",
+        slug: "generics",
+    },
+    {
+        page: <AsyncAwaitPage />,
+        title: "Async/Await",
+        slug: "async-await",
+    },
+    {
+        page: <NullishOperatorsPage />,
+        title: "Nullish Operators",
+        slug: "nullish-operators",
+    },
+].map((lesson, idx) => ({
+    ...lesson,
+    page: (
+        <LessonNumberContext.Provider value={idx + 1}>{lesson.page}</LessonNumberContext.Provider>
+    ),
+})) satisfies LessonInfo[];

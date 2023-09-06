@@ -4,34 +4,62 @@ import hljs from "highlight.js";
 import "highlight.js/styles/github-dark-dimmed.css";
 
 import { useCallback, useMemo, useState } from "react";
-import { styled } from "styled-components";
+import { css, styled } from "styled-components";
 import { trimLines } from "../lib/string";
 import { Button, Card } from "@blueprintjs/core";
 
 export interface CodeBlockProps {
     filename?: string;
-    language: string;
+    language?: string;
     children: string;
+    minimal?: boolean;
 }
 
-const RootDiv = styled(Card).attrs({ elevation: 2 })`
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-
-    position: relative;
+const MinimalRootDivCss = css`
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
 `;
 
-const HeaderDiv = styled.div`
+const RootDiv = styled.div<{ minimal?: boolean }>`
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+
+    position: relative;
+
+    padding: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.5);
+    border-radius: 0.5rem;
+
+    ${p => p.minimal && MinimalRootDivCss}
+`;
+
+const ActionsDiv = styled.div`
     position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
+    top: 0;
+    right: 0;
+
+    margin-right: -0.5rem;
+
+    transform: translateX(100%);
+`;
+
+const CodeDiv = styled.div<{ minimal?: boolean }>`
+    overflow: auto;
+    flex: 1;
+
+    pre {
+        font-size: ${p => (p.minimal ? "0.6rem" : "0.75rem")};
+    }
 `;
 
 export const CodeBlock = observer((props: CodeBlockProps) => {
     const [copied, setCopied] = useState(false);
 
-    const { children, language } = props;
+    const { children, language = "typescript", minimal } = props;
 
     const highlighted = useMemo(() => {
         return hljs.highlight(language, trimLines(children)).value;
@@ -47,13 +75,22 @@ export const CodeBlock = observer((props: CodeBlockProps) => {
     }, [children]);
 
     return (
-        <RootDiv>
-            <HeaderDiv>
-                <Button minimal small onClick={onCopyClick} text={copied ? "Copied!" : "Copy"} />
-            </HeaderDiv>
-            <pre>
-                <code dangerouslySetInnerHTML={{ __html: highlighted }} />
-            </pre>
+        <RootDiv minimal={minimal}>
+            {!minimal && (
+                <ActionsDiv>
+                    <Button
+                        minimal
+                        small
+                        onClick={onCopyClick}
+                        text={copied ? "Copied!" : "Copy"}
+                    />
+                </ActionsDiv>
+            )}
+            <CodeDiv minimal={minimal}>
+                <pre>
+                    <code dangerouslySetInnerHTML={{ __html: highlighted }} />
+                </pre>
+            </CodeDiv>
         </RootDiv>
     );
 });

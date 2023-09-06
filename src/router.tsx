@@ -1,4 +1,4 @@
-import { createHashRouter as createMyRouter } from "react-router-dom";
+import { Navigate, createHashRouter as createMyRouter } from "react-router-dom";
 import { LessonLayout } from "./layouts/LessonLayout";
 import { RootLayout } from "./layouts/RootLayout";
 import { HomePage } from "./pages/HomePage";
@@ -28,6 +28,10 @@ export function createRouter() {
                     })),
                 },
             ],
+        },
+        {
+            path: "*",
+            element: <Navigate to="/" />,
         },
     ]);
 }

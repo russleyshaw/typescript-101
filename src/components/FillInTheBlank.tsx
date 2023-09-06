@@ -6,6 +6,13 @@ import { useRef, useState } from "react";
 
 const BLANK_TEXT = "____";
 
+function castArray<T>(value: T | T[]): T[] {
+    if (Array.isArray(value)) {
+        return value;
+    }
+    return [value];
+}
+
 function replaceBlankWithText(text: string, replacement?: string) {
     if (!replacement) {
         return text;
@@ -15,11 +22,13 @@ function replaceBlankWithText(text: string, replacement?: string) {
 }
 
 export interface FillInTheBlankProps {
+    question?: string;
     title?: string;
-    question: string;
-    answer: string;
+    code: string;
+    answer: string | string[];
     hint?: string;
     explaination?: string;
+    parseTs?: boolean;
 }
 
 const RootDiv = styled.div`
@@ -36,7 +45,7 @@ const HeadingDiv = styled.div`
 `;
 
 export const FillInTheBlank = observer((props: FillInTheBlankProps) => {
-    const { question, answer, title, hint, explaination } = props;
+    const { code, answer, title, hint, explaination, question } = props;
 
     const [value, setValue] = useState("");
     const [error, setError] = useState("");
@@ -47,15 +56,18 @@ export const FillInTheBlank = observer((props: FillInTheBlankProps) => {
     const successIntent = success ? "success" : undefined;
     const intent = successIntent ?? errorIntent;
 
+    const replacedCode = replaceBlankWithText(code, value);
     const onSubmitClick = () => {
-        if (value.trim() === answer.trim()) {
-            setError("");
-            setSuccess(true);
-        } else {
-            setError("Incorrect");
-            setSuccess(false);
-            inputRef.current?.select();
+        for (const a of castArray(answer ?? [])) {
+            if (value.trim() === a.trim()) {
+                setError("");
+                setSuccess(true);
+                return;
+            }
         }
+        setError("Incorrect");
+        setSuccess(false);
+        inputRef.current?.select();
     };
 
     const onValueChange = (value: string) => {
@@ -80,7 +92,8 @@ export const FillInTheBlank = observer((props: FillInTheBlankProps) => {
                 <Icon icon={icon} intent={intent} />
                 <h3>{myTitle}</h3>
             </HeadingDiv>
-            <CodeBlock language="typescript">{replaceBlankWithText(question, value)}</CodeBlock>
+            {question && <span>{question}</span>}
+            <CodeBlock language="typescript">{replacedCode}</CodeBlock>
 
             {error && hint && (
                 <Callout intent="warning" icon="info-sign">

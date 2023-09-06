@@ -1,26 +1,19 @@
-import { HTMLTable } from "@blueprintjs/core";
-import { CodeBlock } from "../../components/CodeBlock";
 import { observer } from "mobx-react";
-import { styled } from "styled-components";
+import { CodeBlock } from "../../components/CodeBlock";
 import { FillInTheBlank } from "../../components/FillInTheBlank";
 import { YesNoQuiz } from "../../components/YesNoQuiz";
+import { Code, ColDiv, MyTable, QuizDiv, WrapRowDiv } from "../../components/styled";
+import { useLessonNumber } from ".";
 
-const MyTable = styled(HTMLTable).attrs({ bordered: true })``;
-
-const QuizDiv = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-`;
-
-export const Lesson1Page = observer(() => {
+export const VariablesPage = observer(() => {
+    const lessonNum = useLessonNumber();
     return (
         <>
-            <h1>Lesson 1: Variables & Constants</h1>
+            <h1>Lesson {lessonNum}: Variables & Constants</h1>
 
             <p>You can create a new variable two ways.</p>
 
-            <HTMLTable bordered>
+            <MyTable>
                 <thead>
                     <tr>
                         <th>Type</th>
@@ -33,18 +26,18 @@ export const Lesson1Page = observer(() => {
                         <td>Constant</td>
                         <td>A constant variable that cannot be reassigned.</td>
                         <td>
-                            <code>const foo = 4;</code>
+                            <Code>const foo = 4;</Code>
                         </td>
                     </tr>
                     <tr>
                         <td>Variable</td>
                         <td>A variable that can be reassigned.</td>
                         <td>
-                            <code>let foo = 4;</code>
+                            <Code>let foo = 4;</Code>
                         </td>
                     </tr>
                 </tbody>
-            </HTMLTable>
+            </MyTable>
 
             <p>
                 Creating a constant means the value cannot be reassigned. This is useful to prevent
@@ -73,79 +66,96 @@ export const Lesson1Page = observer(() => {
                 <tbody>
                     <tr>
                         <td>
-                            <code>boolean</code>
+                            <Code>boolean</Code>
                         </td>
                         <td>A true or false value.</td>
                         <td>
-                            <code>true</code>, <code>false</code>
+                            <ColDiv>
+                                <Code>true</Code>
+                                <Code>false</Code>
+                            </ColDiv>
                         </td>
                     </tr>
 
                     <tr>
                         <td>
-                            <code>number</code>
+                            <Code>number</Code>
                         </td>
                         <td>A number.</td>
                         <td>
-                            <code>1</code>, <code>2</code>, <code>3.14</code>, <code>NaN</code>,{" "}
-                            <code>Infinity</code>
+                            <WrapRowDiv>
+                                <Code>1</Code>
+                                <Code>2</Code>
+                                <Code>3.14</Code>
+                                <Code>NaN</Code>
+                                <Code>Infinity</Code>
+                            </WrapRowDiv>
                         </td>
                     </tr>
 
                     <tr>
                         <td>
-                            <code>string</code>
+                            <Code>string</Code>
                         </td>
                         <td>A string of characters.</td>
                         <td>
-                            <code>'hello'</code>, <code>"world"</code>
+                            <ColDiv>
+                                <Code>'hello'</Code>
+                                <Code>"world"</Code>
+                            </ColDiv>
                         </td>
                     </tr>
 
                     <tr>
                         <td>
-                            <code>null</code>
+                            <Code>null</Code>
                         </td>
                         <td>A value that represents nothing.</td>
                         <td>
-                            <code>null</code>
+                            <Code>null</Code>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <code>undefined</code>
+                            <Code>undefined</Code>
                         </td>
                         <td>A value that represents something that has not been defined.</td>
                         <td>
-                            <code>undefined</code>
+                            <Code>undefined</Code>
                         </td>
                     </tr>
 
                     <tr>
                         <td>
-                            <code>object</code>
+                            <Code>object</Code>
                         </td>
                         <td>A collection of key/value pairs.</td>
                         <td>
-                            <code>{`{ a: 1, b: 2 }`}</code>, <code>{`{ a: 1, b: { c: 3 } }`}</code>
+                            <ColDiv>
+                                <Code>{`{ a: 1, b: 2 }`}</Code>
+                                <Code>{`{ a: 1, b: { c: 3 } }`}</Code>
+                            </ColDiv>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <code>array</code>
+                            <Code>array</Code>
                         </td>
                         <td>A collection of values.</td>
                         <td>
-                            <code>[1, 2, 3]</code>, <code>{`['a', 'b', 'c']`}</code>
+                            <ColDiv>
+                                <Code>[1, 2, 3]</Code>
+                                <Code>{`['a', 'b', 'c']`}</Code>
+                            </ColDiv>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <code>function</code>
+                            <Code>function</Code>
                         </td>
                         <td>A block of code that can be called later.</td>
                         <td>
-                            <code>() =&gt; console.log("foo")</code>
+                            <Code>() =&gt; console.log("foo")</Code>
                         </td>
                     </tr>
                 </tbody>
@@ -172,7 +182,7 @@ foo1.b = 3; // b can be set because foo1 is a constant reference to an object. T
             <h1>Quiz!</h1>
             <QuizDiv>
                 <FillInTheBlank
-                    question={`
+                    code={`
 ____ foo = 1;
 foo = 2;
                     `}
@@ -182,7 +192,7 @@ foo = 2;
                 />
 
                 <FillInTheBlank
-                    question={`
+                    code={`
 ____ foo = 1;
 foo = 2; // Error: Cannot assign to 'foo'.
                 `}

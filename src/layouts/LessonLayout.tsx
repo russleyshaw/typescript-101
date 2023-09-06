@@ -3,6 +3,7 @@ import { observer } from "mobx-react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { LESSONS } from "../pages/lessons";
+import ScrollToTop from "../components/ScrollToTop";
 
 const RootDiv = styled.div`
     display: flex;
@@ -51,23 +52,25 @@ export const LessonLayout = observer(() => {
     };
 
     return (
-        <RootDiv>
-            <Outlet />
+        <ScrollToTop>
+            <RootDiv>
+                <Outlet />
 
-            <NextPrevButtons fill>
-                <Button
-                    disabled={!prevLesson}
-                    text="Previous Lesson"
-                    icon="arrow-left"
-                    onClick={onPrevClick}
-                />
-                <Button
-                    disabled={!nextLesson}
-                    text="Next Lesson"
-                    icon="arrow-right"
-                    onClick={onNextClick}
-                />
-            </NextPrevButtons>
-        </RootDiv>
+                <NextPrevButtons fill>
+                    <Button
+                        disabled={!prevLesson}
+                        text="Previous Lesson"
+                        icon="arrow-left"
+                        onClick={onPrevClick}
+                    />
+                    <Button
+                        disabled={!nextLesson}
+                        text="Next Lesson"
+                        icon="arrow-right"
+                        onClick={onNextClick}
+                    />
+                </NextPrevButtons>
+            </RootDiv>
+        </ScrollToTop>
     );
 });

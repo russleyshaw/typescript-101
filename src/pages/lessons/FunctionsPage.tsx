@@ -1,11 +1,14 @@
 import { observer } from "mobx-react";
 import { CodeBlock } from "../../components/CodeBlock";
 import { HTMLTable } from "@blueprintjs/core";
+import { useLessonNumber } from ".";
+import { Code } from "../../components/styled";
 
-export const Lesson3Page = observer(() => {
+export const FunctionsPage = observer(() => {
+    const lessonNum = useLessonNumber();
     return (
         <>
-            <h1>Lesson 3 - Functions</h1>
+            <h1>Lesson {lessonNum}: Functions</h1>
 
             <p>There are 3 main ways to define a function in TypeScript.</p>
 
@@ -21,31 +24,59 @@ export const Lesson3Page = observer(() => {
                     <tr>
                         <td>Named Function</td>
                         <td>
-                            <code>{`function funcName(args) { ... }`}</code>
+                            <CodeBlock minimal>{`
+function f(args) {
+    ...
+}
+`}</CodeBlock>
                         </td>
                         <td>A function that is defined with a name.</td>
                     </tr>
                     <tr>
                         <td>Anonymous Function</td>
                         <td>
-                            <code>{`const funcName = function (args) { ... }`}</code>
+                            <CodeBlock minimal>{`
+const f = function(args) {
+    ...
+};
+`}</CodeBlock>
                         </td>
                         <td>A function that is not defined with a name.</td>
                     </tr>
                     <tr>
                         <td>Function Expressions</td>
                         <td>
-                            <code>{`const funcName = (args) => { ... }`}</code>
+                            <CodeBlock minimal>{`
+const f = (args) => {
+    ...
+};
+`}</CodeBlock>
                         </td>
                         <td>
                             A shorthand notation for a function. It also does not have its own{" "}
-                            <code>this</code> scope.
+                            <Code>this</Code> scope.
                         </td>
                     </tr>
                 </tbody>
             </HTMLTable>
 
-            <CodeBlock language="ts">{`
+            <h2>Function Types</h2>
+
+            <p>
+                Types can be applied to functions too. When defining a function it is generally good
+                practice to give it explicit types. This establishes an explicit type boundary for
+                the function. Meaning if a consumer of the function is using it incorrectly, it will
+                show that error at the function-call level.
+            </p>
+
+            <p>
+                Using implicit types is handy, but we rarely want to use them for functions,
+                especially ones that are the definers of their own interface. One exception to this
+                is callbacks. Callbacks are often parameters to other functions and thus their type
+                are inferred by the consuming function.
+            </p>
+
+            <CodeBlock>{`
 function add(arg1: number, arg2: number): number {
     return arg1 + arg2;
 }
@@ -71,6 +102,25 @@ type BasicFunc = (arg1: number, arg2: number) => number;
 const add2: BasicFunc = (arg1, arg2) => arg1 + arg2;
 `}</CodeBlock>
 
+            <h2>Callbacks</h2>
+            <p>
+                A callback is a function that is passed as an argument to another function. This
+                allows a piece of code to use user-defined functionality easily. This is a common
+                approach when working with asynchronous code.
+            </p>
+
+            <CodeBlock>{`
+function on(event: string, callback: (value: number) => void) {
+    // Do something
+    callback(1);
+}
+
+on("change", value => {
+    console.log("Value changed", value);
+});
+
+`}</CodeBlock>
+
             <h2>Side-Effects</h2>
 
             <p>
@@ -86,7 +136,7 @@ function updateFoo() {
 }
 `}</CodeBlock>
 
-            <h2>When To Infer/Declare function types.</h2>
+            <h2>When To infer function types.</h2>
 
             <ul>
                 <li>
@@ -113,8 +163,8 @@ button.on("change", value => {
             <h2>Optional/Default Parameters</h2>
 
             <p>
-                Use <code>?</code> to define an optional parameter. The parameter will be{" "}
-                <code>undefined</code> if not provided.
+                Use <Code>?</Code> to define an optional parameter. The parameter will be{" "}
+                <Code>undefined</Code> if not provided.
             </p>
 
             <CodeBlock language="ts">{`

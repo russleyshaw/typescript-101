@@ -35,14 +35,6 @@ const GlobalStyle = createGlobalStyle`
         margin: 0;
         padding: 0;
     }
-
-    code {
-        font-family: "Fira Code", monospace;
-        color: #ff9d00;
-        margin: 0px;
-        padding: 0px;
-    }
-
 `;
 
 const RootDiv = styled.div`
