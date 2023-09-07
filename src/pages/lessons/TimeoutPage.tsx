@@ -1,6 +1,7 @@
 import { observer } from "mobx-react";
 import { CodeBlock } from "../../components/CodeBlock";
 import { useLessonNumber } from ".";
+import { Code } from "../../components/styled";
 
 export const TimeoutPage = observer(() => {
     const lessonNum = useLessonNumber();
@@ -19,7 +20,7 @@ export const TimeoutPage = observer(() => {
                 There are two main ways to initiate an asyncronous operation in JavaScript:
                 `setTimeout` and `setInterval`.
             </p>
-            <h3>setTimeout</h3>
+            <h2>setTimeout</h2>
 
             <p>
                 `setTimeout` is a function that takes a callback function and a delay in
@@ -39,6 +40,24 @@ function sayHello() {
     }, 1000);
 }
 `}</CodeBlock>
+
+<h2>setInterval</h2>
+    <p>
+        <Code>setInterval(func, ms)</Code> can be used to declare that a function should be called regularly until it is cancelled. Use <Code>clearInterval</Code> to cancel the interval.
+    </p>
+
+    <CodeBlock>{`
+
+const intervalId = setInterval(() => {
+    console.log("Prints every 500ms");
+}, 500);
+
+setTimeout(() => {
+    clearInterval(intervalId);
+}, 5000); // Cancel the interval after 5 seconds
+
+`}</CodeBlock>
+
         </>
     );
 });

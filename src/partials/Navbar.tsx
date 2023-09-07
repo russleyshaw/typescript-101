@@ -12,8 +12,6 @@ export const Navbar = observer(() => {
                 <BpNavbar.Heading>Template</BpNavbar.Heading>
                 <BpNavbar.Divider />
                 <NavButton minimal icon="home" text="Home" to="/" />
-                <NavButton minimal icon="document" text="Files" to="/foo" />
-                <NavButton minimal icon="document" text="Files" to="/bar" />
             </BpNavbar.Group>
 
             <BpNavbar.Group align={Alignment.RIGHT}>

@@ -176,7 +176,9 @@ const foos = [1, 2, 3];
 foos.push(4); // foos is now [1, 2, 3, 4]
 
 const foo1 = { a: 1, b: 2 };
-foo1.b = 3; // b can be set because foo1 is a constant reference to an object. The object itself is still mutable.
+foo1.b = 3;
+// b can be set because foo1 is a constant reference to an object.
+// The object itself is still mutable.
     `}</CodeBlock>
 
             <h1>Quiz!</h1>
