@@ -2,7 +2,7 @@ import { Button, Drawer, DrawerSize } from "@blueprintjs/core";
 import { observer } from "mobx-react";
 import { styled } from "styled-components";
 import { ThemeButtons } from "../components/ThemeButtons";
-import { APP_VERSION } from "../config";
+import { APP_VERSION, SHOW_CHANGELOG, SHOW_EULA } from "../config";
 import { useClosingDelay } from "../lib/react";
 import { useBoolSearchParam } from "../lib/router";
 import { useAppSettings } from "../models/app_settings";
@@ -41,11 +41,13 @@ export const SettingsDrawer = observer(() => {
                     setTheme={appSettings.setTheme}
                 />
 
-                <Button text="EULA" onClick={() => setIsEulaOpen(true)} />
-                <Button
-                    text={`Changelog v${APP_VERSION}`}
-                    onClick={() => setIsChangelogOpen(true)}
-                />
+                {SHOW_EULA && <Button text="EULA" onClick={() => setIsEulaOpen(true)} />}
+                {SHOW_CHANGELOG && (
+                    <Button
+                        text={`Changelog v${APP_VERSION}`}
+                        onClick={() => setIsChangelogOpen(true)}
+                    />
+                )}
             </RootDiv>
         </Drawer>
     );

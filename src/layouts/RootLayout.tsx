@@ -9,6 +9,7 @@ import { ChangelogDialog } from "../partials/ChangelogDialog";
 import { EulaDialog } from "../partials/EulaDialog";
 
 import { useDarkModeClasses } from "../lib/theme";
+import { SHOW_CHANGELOG, SHOW_EULA } from "../config";
 
 const DARK_MODE_CSS = css`
     background-color: #2f343c;
@@ -57,8 +58,8 @@ export const RootLayout = observer(() => {
                     <Navbar />
                     <Outlet />
                     <SettingsDrawer />
-                    <ChangelogDialog />
-                    <EulaDialog />
+                    {SHOW_CHANGELOG && <ChangelogDialog />}
+                    {SHOW_EULA && <EulaDialog />}
                 </RootDiv>
             </ThemeProvider>
         </AppSettingsContext.Provider>

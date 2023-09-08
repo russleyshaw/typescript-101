@@ -17,14 +17,6 @@ export function createRouter() {
                     path: "/",
                     element: <HomePage />,
                 },
-                {
-                    path: "/foo",
-                    element: <HomePage />,
-                },
-                {
-                    path: "/bar",
-                    element: <HomePage />,
-                },
             ],
         },
     ]);
