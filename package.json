@@ -1,6 +1,6 @@
 {
-    "name": "webapp-template",
-    "displayName": "Web App Template",
+    "name": "typescript-101",
+    "displayName": "TypeScript 101",
     "version": "1.0.0",
     "description": "The current template I use for toying around with web applications.",
     "main": "index.js",
